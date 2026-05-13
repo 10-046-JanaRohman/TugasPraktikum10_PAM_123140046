@@ -45,7 +45,7 @@ class NotesViewModelTest {
     }
 
     @Test
-    fun `initial notes state should be empty`() = runTest {
+    fun `Flow Test - initial notes state should be empty`() = runTest {
         viewModel.notes.test {
             assertEquals(0, awaitItem().size)
         }
@@ -88,7 +88,7 @@ class NotesViewModelTest {
     }
 
     @Test
-    fun `favoriteNotes should emit updates from repository`() = runTest {
+    fun `Flow Test - favoriteNotes should emit updates from repository`() = runTest {
         val favoritesFlow = MutableStateFlow<List<Note>>(emptyList())
         coEvery { noteRepository.getFavoriteNotes() } returns favoritesFlow
 
@@ -105,7 +105,7 @@ class NotesViewModelTest {
     }
 
     @Test
-    fun `notes should emit new list when search query changes`() = runTest {
+    fun `Flow Test - notes should emit new list when search query changes`() = runTest {
         val notesForEmptyQuery = listOf(Note(1L, "Note 1", "Content", false, 0L, 0L))
         val notesForSpecificQuery = listOf(Note(2L, "Cari", "Hasil", false, 0L, 0L))
 
