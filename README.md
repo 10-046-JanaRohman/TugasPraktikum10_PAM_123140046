@@ -56,18 +56,12 @@ Pengujian integrasi tampilan menggunakan `ComposeTestRule`. Test case yang dilak
 - **Compose UI Test**: Untuk menguji komponen UI Jetpack Compose.
 - **Koin Test**: Untuk memvalidasi Dependency Injection di dalam pengujian UI.
 
-## Hasil Pengujian
-
-Berdasarkan hasil eksekusi test suite terakhir, seluruh skenario pengujian telah **LULUS (PASSED)**.
-
-- **Total Unit Test (Repository & ViewModel)**: 12 Tests Passed
-- **Total UI Test**: 3 Tests Passed
-- **Status Akhir**: **15 Tests Passed**
-
 ### Screenshot Hasil Testing
 <img width="1919" height="1021" alt="Screenshot PAM 10" src="https://github.com/user-attachments/assets/bbd65c60-fcf3-402b-9e93-652a66e92140" />
+<img width="1919" height="970" alt="Screenshot 2026-05-13 221647" src="https://github.com/user-attachments/assets/9d14e24c-6a9a-46eb-93a5-5139844c09be" />
+<img width="1919" height="984" alt="Screenshot 2026-05-13 223157" src="https://github.com/user-attachments/assets/95ab6750-6cae-43dd-9be0-215250140f92" />
+<img width="1919" height="972" alt="Screenshot 2026-05-13 223221" src="https://github.com/user-attachments/assets/a5ac60ea-2819-4670-84ba-899cca817a21" />
 <img width="1919" height="1016" alt="image" src="https://github.com/user-attachments/assets/a19964b1-9ab7-4608-99e5-e10ea08aa3bb" />
-
 
 ---
 
