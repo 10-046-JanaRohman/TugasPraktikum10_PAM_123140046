@@ -65,6 +65,9 @@ Berdasarkan hasil eksekusi test suite terakhir, seluruh skenario pengujian telah
 - **Status Akhir**: **15 Tests Passed**
 
 ### Screenshot Hasil Testing
+<img width="1919" height="1021" alt="Screenshot PAM 10" src="https://github.com/user-attachments/assets/bbd65c60-fcf3-402b-9e93-652a66e92140" />
+<img width="1919" height="1016" alt="image" src="https://github.com/user-attachments/assets/a19964b1-9ab7-4608-99e5-e10ea08aa3bb" />
+
 
 ---
 
