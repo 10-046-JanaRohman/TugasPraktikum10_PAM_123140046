@@ -66,7 +66,6 @@ Berdasarkan hasil eksekusi test suite terakhir, seluruh skenario pengujian telah
 
 ### Screenshot Hasil Testing
 
-![Screenshot PAM 10.png](../../../OneDrive/Pictures/Screenshots/Screenshot%20PAM%2010.png)
 ---
 
 ## Video Demo
