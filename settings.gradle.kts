@@ -1,4 +1,4 @@
-rootProject.name = "Praktikum9_PAM_123140046"
+rootProject.name = "Praktikum10_PAM_123140046"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

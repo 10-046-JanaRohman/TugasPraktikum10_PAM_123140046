@@ -5,12 +5,13 @@ import app.cash.sqldelight.coroutines.mapToList
 import com.example.package_123140046.data.model.Note
 import com.example.package_123140046.data.model.SortOrder
 import com.example.package_123140046.database.NotesDatabase
+// import com.example.package_123140046.database.NoteEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 
-class NoteRepository(database: NotesDatabase) {
+class NoteRepository(database: com.example.package_123140046.database.NotesDatabase) {
 
     private val queries = database.noteEntityQueries
 

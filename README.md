@@ -1,156 +1,74 @@
-# NotesApp - Praktikum 5 + Praktikum 7 + Praktikum 8
+# Tugas Praktikum 10 - Testing & Dependency Injection
 
-Project ini adalah kelanjutan langsung dari **Praktikum 5 NotesApp**. Fitur awal Praktikum 5 tetap dipertahankan, lalu digabung dengan tugas **Praktikum 7 Local Data Storage** dan **Praktikum 8 Platform-Specific Features**.
+**Nama**  : Jana Rohman Wasiso  
+**NIM**   : 123140046  
+**Kelas** : Pengembangan Aplikasi Mobile
 
-## Identitas
+---
 
-- Nama: Jana Rohman Wasiso
-- NIM: 123140046
-- Mata Kuliah: Pengembangan Aplikasi Mobile
+## Deskripsi Proyek
 
-## Fitur dari Praktikum 5 yang tetap dipertahankan
+Proyek ini berfokus pada implementasi **Testing** yang komprehensif dan **Dependency Injection (DI)
+** menggunakan Koin pada aplikasi Notes berbasis Kotlin Multiplatform (KMP). Tujuan utamanya adalah
+memastikan reliabilitas logika bisnis (Repository & ViewModel), aliran data reaktif (Flow), serta
+interaksi antarmuka pengguna (UI) berjalan dengan sempurna.
 
-- List notes
-- Add note
-- Edit note
-- Delete note
-- Detail note
-- Favorite note
-- Bottom navigation: Notes, Favorites, Profile
+## Implementasi Testing
 
-## Upgrade Praktikum 7 - Local Data Storage
+Pengujian dibagi menjadi empat kategori utama untuk mencakup seluruh lapisan arsitektur aplikasi:
 
-- SQLDelight database untuk menyimpan notes secara lokal.
-- CRUD operations:
-  - Create note
-  - Read/list note
-  - Update note
-  - Delete note
-- Favorite tersimpan di database lokal.
-- Search functionality untuk mencari note berdasarkan title/content.
-- Settings screen:
-  - Theme: light, dark, system
-  - Sort order: terbaru/terlama
-- Offline-first: semua data notes berasal dari database lokal, sehingga tetap ada setelah aplikasi ditutup.
-- Empty state pada list notes dan hasil pencarian.
+### 1. Repository Test
 
-## Upgrade Praktikum 8 - Platform-Specific Features
+Menguji integritas data layer yang terhubung dengan SQLDelight. Fokus pengujian meliputi:
 
-- Koin Dependency Injection untuk seluruh dependency utama.
-- `expect/actual` untuk:
-  - `DatabaseDriverFactory`
-  - `SettingsFactory`
-  - `DeviceInfo`
-  - `NetworkMonitor`
-- Device Info di Profile & Settings screen:
-  - Device name
-  - OS version
-  - App version
-- Network Status Indicator di halaman Notes.
-- Android implementation memakai `ConnectivityManager`.
-- iOS implementation disediakan sebagai stub sederhana agar struktur KMP tetap lengkap.
+- Validasi fungsi CRUD (Create, Read, Update, Delete) pada database.
+- Pemastian query pencarian (*Search*) dan filter favorit bekerja sesuai logika database.
 
-## Database Schema
+### 2. ViewModel Test
 
-File schema ada di:
+Menguji logika bisnis pada layer presentasi menggunakan **MockK**. Fokus pengujian meliputi:
 
-```text
-composeApp/src/commonMain/sqldelight/com/example/demop4app_123140046/database/NoteEntity.sq
-```
+- Perubahan State UI saat terjadi aksi pengguna (tambah, edit, hapus).
+- Validasi interaksi antara ViewModel dengan Repository menggunakan mock dependencies.
 
-Schema utama:
+### 3. Flow Test (Reactive Logic)
 
-```sql
-CREATE TABLE NoteEntity (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT NOT NULL,
-    content TEXT NOT NULL,
-    is_favorite INTEGER AS Boolean NOT NULL DEFAULT 0,
-    created_at INTEGER NOT NULL,
-    updated_at INTEGER NOT NULL
-);
-```
+Menggunakan library **Turbine** untuk menguji aliran data asinkron pada `StateFlow`. Pengujian
+memastikan:
 
-Query yang tersedia:
+- Data berhasil di-emit dengan benar saat terjadi perubahan di database.
+- Sinkronisasi antara query pencarian dengan daftar catatan yang ditampilkan.
 
-- `selectAllNewest`
-- `selectAllOldest`
-- `selectById`
-- `selectFavorites`
-- `searchNewest`
-- `searchOldest`
-- `insert`
-- `update`
-- `toggleFavorite`
-- `deleteById`
+### 4. UI Test (Compose)
 
-## Architecture Diagram
+Pengujian integrasi tampilan menggunakan `ComposeTestRule`. Test case yang dilakukan meliputi:
 
-```text
-UI Compose Screens
-       |
-       v
-ViewModel
-NotesViewModel / SettingsViewModel
-       |
-       v
-Repository Layer
-NoteRepository / SettingsRepository
-       |
-       v
-Local Data Layer
-SQLDelight NotesDatabase / Multiplatform Settings
-       |
-       v
-Platform Layer expect/actual
-DatabaseDriverFactory / SettingsFactory / DeviceInfo / NetworkMonitor
-       |
-       v
-Koin DI Modules
-commonModule + platformModule
-```
+- Memastikan *Empty State* muncul saat tidak ada catatan.
+- Validasi fungsionalitas *Search Input* (mengetik dan memfilter list).
+- Memastikan daftar catatan (*Notes List*) tampil dengan benar setelah data dimuat.
 
-## Dependency Injection
+## Library yang Digunakan
 
-Dependency utama diregistrasikan di:
+- **JUnit4**: Framework dasar pengujian unit.
+- **MockK**: Library untuk mocking objek pada unit test.
+- **Turbine**: Library khusus untuk pengujian Kotlin Coroutines Flow.
+- **Kotlin Coroutines Test**: Untuk menangani eksekusi kode asinkron di lingkungan testing.
+- **Compose UI Test**: Untuk menguji komponen UI Jetpack Compose.
+- **Koin Test**: Untuk memvalidasi Dependency Injection di dalam pengujian UI.
 
-```text
-composeApp/src/commonMain/kotlin/com/example/demop4app_123140046/di/AppModule.kt
-```
+## Hasil Pengujian
 
-Android platform module:
+Berdasarkan hasil eksekusi test suite terakhir, seluruh skenario pengujian telah **LULUS (PASSED)**.
 
-```text
-composeApp/src/androidMain/kotlin/com/example/demop4app_123140046/platform/PlatformModule.android.kt
-```
+- **Total Unit Test (Repository & ViewModel)**: 12 Tests Passed
+- **Total UI Test**: 3 Tests Passed
+- **Status Akhir**: **15 Tests Passed**
 
-Koin diinisialisasi dari `MainActivity` agar Android context dapat digunakan oleh database, settings, device info, dan network monitor.
+### Screenshot Hasil Testing
 
-## Cara menjalankan
+![Screenshot PAM 10.png](../../../OneDrive/Pictures/Screenshots/Screenshot%20PAM%2010.png)
+---
 
-1. Buka project di Android Studio.
-2. Pastikan koneksi internet aktif saat Gradle sync pertama kali karena project memakai SQLDelight, Koin, dan Multiplatform Settings.
-3. Jalankan konfigurasi Android `composeApp`.
-4. Test fitur:
-   - tambah note
-   - edit note
-   - delete note
-   - favorite note
-   - search note
-   - ubah theme dan sort order
-   - matikan internet/aktifkan airplane mode untuk melihat network indicator
+## Video Demo
 
-## Catatan Pengumpulan
-
-Branch yang disarankan:
-
-- `week-7-8` atau sesuai instruksi dosen/asisten.
-
-Isi demo video 45 detik yang disarankan:
-
-1. Tambah note baru.
-2. Edit note.
-3. Search note.
-4. Favorite/unfavorite note.
-5. Buka Profile & Settings dan tampilkan Device Info.
-6. Matikan internet untuk menampilkan Network Status Indicator.
+https://drive.google.com/file/d/1BnyDFZylBklBlkmk3iiGEZJPPhP3ccmc/view?usp=drive_link 

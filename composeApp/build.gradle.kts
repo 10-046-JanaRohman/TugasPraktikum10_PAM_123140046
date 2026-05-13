@@ -68,18 +68,29 @@ kotlin {
 
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.turbine.lib)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.koin.test.lib)
+        }
+
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.mockk.lib)
+                implementation("io.mockk:mockk-android:1.13.12")
+                implementation("io.mockk:mockk-agent:1.13.12")
+            }
         }
     }
 }
 
 android {
     namespace = "com.example.package_123140046"
-    compileSdk = 34
+    compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.package_123140046"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = libs.versions.android.minSdk.get().toInt()
+        targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
@@ -95,6 +106,8 @@ android {
             "GEMINI_API_KEY",
             "\"${localProperties.getProperty("GEMINI_API_KEY", "")}\""
         )
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
@@ -108,6 +121,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            enableUnitTestCoverage = true
+        }
         getByName("release") {
             isMinifyEnabled = false
         }
@@ -120,7 +136,11 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.compose.uiTooling)
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.7.0")
+    androidTestImplementation(libs.koin.test.lib)
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.0")
 }
 
 sqldelight {

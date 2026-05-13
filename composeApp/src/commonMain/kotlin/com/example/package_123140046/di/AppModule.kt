@@ -15,7 +15,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-val commonModule = module {
+val dataModule = module {
     single {
         HttpClient {
             install(HttpTimeout) {
@@ -27,22 +27,22 @@ val commonModule = module {
     }
 
     single { DatabaseProvider(get()).database }
-
     single { NoteRepository(get()) }
     single { SettingsRepository(get()) }
-
     single { GeminiService(get()) }
     single<AIRepository> { AIRepositoryImpl(get()) }
+}
 
-    single { NotesViewModel(get(), get()) }
-    single { SettingsViewModel(get()) }
-    single { ChatViewModel(get()) }
+val viewModelModule = module {
+    factory { NotesViewModel(get(), get()) }
+    factory { SettingsViewModel(get()) }
+    factory { ChatViewModel(get()) }
 }
 
 expect fun platformModule(): Module
 
 fun appModules(): List<Module> {
-    return listOf(commonModule, platformModule())
+    return listOf(dataModule, viewModelModule, platformModule())
 }
 
 fun initKoin() {
